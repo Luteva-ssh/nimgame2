@@ -132,14 +132,14 @@ proc load*(graphic: MpegGraphic, src: ptr RWops, freeSrc: bool = true): bool =
 
 
 proc newMpegGraphic*(filename: string): MpegGraphic =
-  new result
+  new result, free
   if not result.load(filename):
     result.free()
     return nil
 
 
 proc newMpegGraphic*(src: ptr RWops, freeSrc: bool): MpegGraphic =
-  new result
+  new result, free
   if not result.load(src, freeSrc):
     result.free()
     return nil

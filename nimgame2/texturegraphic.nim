@@ -46,7 +46,7 @@ proc freeTexture*(graphic: TextureGraphic) =
     graphic.fTexture = nil
 
 
-proc free*(graphic: TextureGraphic) =
+proc free*(graphic: TextureGraphic) = 
   graphic.freeTexture()
   graphic.fFormat = 0
   graphic.fSize = (0, 0)
