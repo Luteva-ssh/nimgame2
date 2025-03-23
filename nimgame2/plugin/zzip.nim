@@ -32,17 +32,20 @@ proc zzipSeek*(context: ptr RWops,
   return zzipSeek(rwopsZzipFile(context), offset.int, whence)
 
 proc zzipRead*(context: ptr RWops,
-               buf: pointer, size: csize, maxnum: csize): csize {.cdecl.} =
-  return zzipRead(rwops_Zzip_File(context), buf, size * maxnum) div size
+               buf: pointer, size: csize_t, maxnum: csize_t): csize_t {.cdecl.} =
+  let bytesRead = zzip_read(rwopsZzipFile(context), buf, int(size * maxnum))
+  if bytesRead <= 0:
+    return 0
+  return csize_t(bytesRead) div size
 
 proc zzipWrite*(context: ptr RWops,
-                buf: pointer; size: csize, num: csize): csize {.cdecl.} =
+                buf: pointer; size: csize_t, num: csize_t): csize_t {.cdecl.} =
   return 0 # ignored
 
 proc zzipClose*(context: ptr RWops): cint {.cdecl.} =
   if context == nil:
     return 0
-  zzipClose(rwops_Zzip_File(context))
+  zzipClose(rwopsZzipFile(context))
   freeRW(context)
   return 0
 
@@ -64,4 +67,3 @@ proc rwFromZZip*(file, mode: string = "r"): ptr RWops =
   result.write = zzipWrite
   result.seek = zzipSeek
   result.close = zzipClose
-

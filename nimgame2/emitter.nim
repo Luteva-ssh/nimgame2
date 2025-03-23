@@ -137,7 +137,7 @@ proc emit*(emitter: Emitter, amount: int = 1,
     of eaBox:
       let
         half = emitter.area.dim / 2
-        point: Coord = (rand(-half.w..half.w), rand(-half.h..half.h))
+        point: Coord = (float(rand(-half.w..half.w)), float(rand(-half.h..half.h)))
       particle.pos = rotate(point * emitter.absScale,
                             emitter.absPos * emitter.parallax, emitter.absRot)
     # end of case emitter.area.kind
@@ -159,4 +159,3 @@ proc emit*(emitter: Emitter, amount: int = 1,
       procedure(particle)
     # add to the scene
     emitter.scene.add(particle)
-

@@ -129,12 +129,15 @@ proc renderGuiProgressBar*(bar: GuiProgressBar) =
   # foreground
   if bar.value > 0:
 
-    let value = (bar.value - bar.min) / (bar.max - bar.min)
+    let 
+      value = (bar.value - bar.min) / (bar.max - bar.min)
+      w_val = int(float(bar.dim.w) * value)
+      h_val = int(float(bar.dim.h) * value)
     var part: Coord = case bar.direction:
       of Direction.leftRight, Direction.rightLeft:
-        (int(bar.dim.w.float * value), bar.dim.h)
+        (float(w_val), float(bar.dim.h))
       of Direction.bottomTop, Direction.topBottom:
-        (bar.dim.w, int(bar.dim.h.float * value))
+        (float(bar.dim.w), float(h_val))
 
     if bar.fgGraphic == nil:
       case bar.direction:
@@ -193,4 +196,3 @@ proc renderGuiProgressBar*(bar: GuiProgressBar) =
 
 method render*(bar: GuiProgressBar) =
   bar.renderGuiProgressBar()
-

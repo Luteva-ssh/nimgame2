@@ -36,7 +36,7 @@ const
   #NameSize    = 100
   SzSize      = 12
   MagicSize   = 5
-  Magic       = cast[ptr uint8]("ustar") # Modern GNU tar's magic const
+  Magic       = cast[ptr uint8](cstring("ustar")) # Modern GNU tar's magic const
   Char0       = uint8('0')
   Char9       = uint8('9')
 
@@ -240,4 +240,3 @@ proc read*(tar: TarFile, filename: string): ptr RWops =
   if idx < 0:
     return nil
   return rwFromMem(cast[pointer](tar.contents[idx].data), tar.contents[idx].size)
-
