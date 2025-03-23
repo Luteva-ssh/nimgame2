@@ -9,8 +9,8 @@ license       = "MIT"
 
 requires "nim >= 1.4.0"
 requires "sdl2_nim >= 2.0.14.2"
+requires "zip >= 0.3.1"
 
 # Options
 
 skipDirs = @["demos"]
-
